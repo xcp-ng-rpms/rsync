@@ -101,7 +101,7 @@ install -D -m644 %{SOURCE6} $RPM_BUILD_ROOT/%{_unitdir}/rsyncd@.service
 %{_unitdir}/rsyncd.service
 %{_unitdir}/rsyncd@.service
 %{_mandir}/man5/rsyncd.conf.5*
-%config %{_sysconfdir}/rsyncd.conf
+%config(noreplace) %{_sysconfdir}/rsyncd.conf
 
 %post daemon
 %systemd_post rsyncd.service
