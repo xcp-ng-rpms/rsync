@@ -1,6 +1,6 @@
-%global package_speccommit 661566f05cad367a75bc6e0d33add9048c5b210a
+%global package_speccommit 03dace9beef995ac5a43e75d8ec0fae79899bbe3
 %global usver 3.4.1
-%global xsver 1
+%global xsver 4
 %global xsrel %{xsver}%{?xscount}%{?xshash}
 
 %global _hardened_build 1
@@ -27,9 +27,12 @@ BuildRequires: autoconf
 BuildRequires: popt-devel
 BuildRequires: lz4-devel
 BuildRequires: openssl-devel
-BuildRequires: libzstd-devel
 BuildRequires: xxhash-devel
 BuildRequires: zlib-devel
+
+%if 0%{?xenserver} >= 8
+BuildRequires: libzstd-devel
+%endif
 
 %if 0%{?xenserver} < 9
 BuildRequires: systemd
@@ -69,7 +72,11 @@ package provides the anonymous rsync service.
 %configure \
   --enable-openssl \
   --enable-xxhash \
+%if 0%{?xenserver} >= 8
   --enable-zstd \
+%else
+  --disable-zstd \
+%endif
   --enable-lz4 \
   --enable-ipv6 \
   --with-included-zlib=no
@@ -113,6 +120,15 @@ install -D -m644 %{SOURCE6} $RPM_BUILD_ROOT/%{_unitdir}/rsyncd@.service
 %systemd_postun_with_restart rsyncd.service
 
 %changelog
+* Fri Feb 28 2025 Deli Zhang <deli.zhang@cloud.com> - 3.4.1-4
+- CP-53507: Rebuild with OpenSSL 3
+
+* Thu Feb 27 2025 Gerald Elder-Vass <gerald.elder-vass@cloud.com> - 3.4.1-3
+- CP-53393: Remove build dependency on libzstd-devel for Yangtze
+
+* Wed Feb 26 2025 Gerald Elder-Vass <gerald.elder-vass@cloud.com> - 3.4.1-2
+- CP-53393: Build compatibility for Yangtze
+
 * Thu Jan 16 2025 Andrew Cooper <andrew.cooper3@citrix.com> - 3.4.1-1
 - Update to 3.4.1
    - Fixes for CVE-2024-12084, CVE-2024-12085, CVE-2024-12086
