@@ -8,7 +8,7 @@
 Summary: A program for synchronizing files over a network
 Name: rsync
 Version: 3.4.1
-Release: %{?xsrel}.2%{?dist}
+Release: %{?xsrel}.2~XCPNG2710.4%{?dist}
 URL: https://rsync.samba.org/
 
 Source0: rsync-3.4.1.tar.gz
