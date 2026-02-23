@@ -8,7 +8,7 @@
 Summary: A program for synchronizing files over a network
 Name: rsync
 Version: 3.4.1
-Release: %{?xsrel}.1%{?dist}
+Release: %{?xsrel}.2%{?dist}
 URL: https://rsync.samba.org/
 
 Source0: rsync-3.4.1.tar.gz
@@ -113,6 +113,9 @@ install -D -m644 %{SOURCE6} $RPM_BUILD_ROOT/%{_unitdir}/rsyncd@.service
 %systemd_postun_with_restart rsyncd.service
 
 %changelog
+* Thu Jan 08 2026 Philippe Coval <philippe.coval@vates.tech> - 3.4.1-1.2
+- Rebuild on openssl-3
+
 * Fri Apr 25 2025 Thierry Escande <thierry.escande@vates.tech> - 3.4.1-1.1
 - Set noreplace flag for /etc/rsyncd.conf file
 
